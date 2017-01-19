@@ -13,12 +13,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait">>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.name.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+
+        <activity
+            android:name=".detail.FlickrDetailActivity"
+            android:parentActivityName=".detail.FlickrDetailActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".detail.FlickrDetailActivity"/>
         </activity>
 
         <service

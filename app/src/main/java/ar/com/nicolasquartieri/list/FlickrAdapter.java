@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ar.com.nicolasquartieri.R;
+import ar.com.nicolasquartieri.detail.FlickrDetailActivity;
 import ar.com.nicolasquartieri.model.Photo;
 import ar.com.nicolasquartieri.widget.LoadingImageView;
 
@@ -84,7 +85,8 @@ class FlickrAdapter extends RecyclerView.Adapter<FlickrAdapter.PhotoHolder> {
         public void onClick(View v) {
 			Photo photo = photos.get(getAdapterPosition());
             if (photo != null) {
-                
+				Activity activity = fragment.getActivity();
+				activity.startActivity(FlickrDetailActivity.getIntent(activity, photo));
             }
         }
 	}

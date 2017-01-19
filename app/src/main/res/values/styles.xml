@@ -45,4 +45,32 @@
         <item name="textAllCaps">true</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="fonte">
+        <item name="android:fontFamily">@raw/helvetica_neu_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+    </style>
+
+    <style name="fontc">
+        <item name="android:fontFamily">@raw/helvetica_neu_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="fontd">
+        <item name="android:fontFamily">@raw/helveticaneue_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+    <style name="TranslucentDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/c11_80</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@android:color/transparent</item>
+    </style>
 </resources>

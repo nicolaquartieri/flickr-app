@@ -21,6 +21,7 @@ import ar.com.nicolasquartieri.local.AppContentProvider;
 import ar.com.nicolasquartieri.local.PhotoTable;
 import ar.com.nicolasquartieri.model.Photo;
 import ar.com.nicolasquartieri.model.Photos;
+import ar.com.nicolasquartieri.ui.utils.EnvironmentUtils;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -211,7 +212,7 @@ public class FlickrSearchApiService extends ApiService {
             }
 
             public String getUrl() {
-                uriBuilder = Uri.parse("https://api.flickr.com/services/rest/").buildUpon();
+                uriBuilder = Uri.parse(EnvironmentUtils.getBaseUrl()).buildUpon();
                 uriBuilder.appendQueryParameter("method", "flickr.photos.search");
                 uriBuilder.appendQueryParameter("api_key", "67694921845e1e630e1be511d82a6f53");
                 uriBuilder.appendQueryParameter("text", tokenMap.get(SEARCH_QUERY_PARAM));
