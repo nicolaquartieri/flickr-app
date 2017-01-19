@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import nicolasquartieri.com.ar.flickr_app.R;
+import remote.ApiErrorResponse;
+import remote.ApiService;
 import ui.utils.AnimationUtils;
 
 public class BaseFragment extends Fragment {

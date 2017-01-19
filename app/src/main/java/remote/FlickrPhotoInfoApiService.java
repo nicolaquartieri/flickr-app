@@ -16,11 +16,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import ar.com.nicolasquartieri.BuildConfig;
-import ar.com.nicolasquartieri.local.AppContentProvider;
-import ar.com.nicolasquartieri.local.PhotoInfoTable;
-import ar.com.nicolasquartieri.model.Photo;
-import ar.com.nicolasquartieri.model.PhotoInfo;
+import local.AppContentProvider;
+import local.PhotoInfoTable;
+import model.Photo;
+import model.PhotoInfo;
+import nicolasquartieri.com.ar.flickr_app.BuildConfig;
 import okhttp3.Request;
 import okhttp3.Response;
 

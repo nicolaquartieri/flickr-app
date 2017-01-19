@@ -27,6 +27,7 @@ import nicolasquartieri.com.ar.flickr_app.FlickrApplication;
 import okhttp3.Request;
 import okhttp3.Response;
 import remote.httpclient.HttpClientProvider;
+import ui.utils.GsonHelper;
 
 /**
  * Api service which can be called through ApiIntentService.

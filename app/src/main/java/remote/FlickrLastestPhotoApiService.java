@@ -17,6 +17,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import local.AppContentProvider;
+import local.PhotoTable;
+import model.Photo;
+import model.Photos;
 import nicolasquartieri.com.ar.flickr_app.BuildConfig;
 import okhttp3.Request;
 import okhttp3.Response;
