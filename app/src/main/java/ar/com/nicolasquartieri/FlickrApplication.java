@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import ar.com.nicolasquartieri.local.AppDatabase;
+
 /**
  * @author Nicolas Quartieri (nicolas.quartieri@gmailn.com)
  */
@@ -21,6 +23,9 @@ public class FlickrApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
+
+		// Clean DB.
+		AppDatabase.cleanDB(getContentResolver());
 
 		// Initialize shared preferences.
 		sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFERENCES,
