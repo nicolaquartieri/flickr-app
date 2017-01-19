@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="c9">#CCCCCC</color>
+    <color name="c1">#08b4c5</color>
+    <color name="c1_1">#069198</color>
+    <color name="c10">#FFFFFF</color>
+    <color name="c1_2">#8016b0c5</color>
+    <color name="c8">#FF0000</color>
+    <color name="c6">#555555</color>
+    <color name="c6_1">#e0e0e0</color>
+    <color name="c6_2">#f9f9f9</color>
+    <color name="c7">#292929</color>
+    <color name="c11">#000000</color>
+    <color name="c11_50">#80000000</color>
+    <color name="c11_0">#00000000</color>
+    <color name="c11_1">#80000000</color>
+    <color name="c11_80">#CC000000</color>
+    <color name="c11_12">#30000000</color>
+    <color name="c12">#E5F7F9</color>
+    <color name="c13">#EEEEEE</color>
+    <color name="c14">#ff4e4e</color>
+    <color name="c15">#b22727</color>
+
+    <!-- Material design color gradients. -->
+    <color name="black">#000000</color>
+    <color name="black_87">#DD000000</color>
+    <color name="black_72">#BA000000</color>
+    <color name="black_54">#89000000</color>
+    <color name="black_32">#51000000</color>
+    <color name="black_26">#42000000</color>
+    <color name="black_12">#1E000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_87">#DDFFFFFF</color>
+    <color name="white_54">#89FFFFFF</color>
+    <color name="white_26">#42FFFFFF</color>
+    <color name="white_12">#1EFFFFFF</color>
+
+    <color name="grey_32">#51EEEEEE</color>
+
+    <!-- Action bar background color. -->
+    <color name="action_bar_background">#f9f9f9</color>
 </resources>
