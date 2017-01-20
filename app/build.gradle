@@ -16,19 +16,17 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            debuggable true
+            proguardFile(getDefaultProguardFile('proguard-android.txt'))
+            proguardFile 'proguard-rules.pro'
+        }
     }
 
     productFlavors {
         dev {
             versionName = android.defaultConfig.versionName + " (DEV)"
-        }
-        qa {
-            versionName = android.defaultConfig.versionName + " (QA)"
-        }
-        staging {
-            versionName = android.defaultConfig.versionName + " (STAGING)"
-        }
-        production {
         }
     }
 
