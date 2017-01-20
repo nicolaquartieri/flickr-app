@@ -2,7 +2,7 @@
 
 Simple App for search photos based on user preference.
 
-
+![Image of flickr-app](https://github.com/nicolaquartieri/flickr-app/blob/master/device.png)
 
 ### Feature
 
