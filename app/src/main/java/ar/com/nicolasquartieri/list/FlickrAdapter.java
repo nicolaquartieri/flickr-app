@@ -33,7 +33,7 @@ class FlickrAdapter extends RecyclerView.Adapter<FlickrAdapter.PhotoHolder> {
 		Context context = parent.getContext();
 		LayoutInflater inflater = LayoutInflater.from(context);
 
-		View photoElementView = inflater.inflate(R.layout.photo_recycle_grid_element, parent,
+		View photoElementView = inflater.inflate(R.layout.photo_recycle_element, parent,
 				false);
 		return new PhotoHolder(photoElementView);
 	}
