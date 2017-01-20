@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ar.com.nicolasquartieri.widget.LoadingFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/nothing_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <include layout="@layout/fragment_nothing_here"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/photo_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:visibility="visible"/>
+
+    <RelativeLayout
+        android:id="@+id/fetch_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        android:layout_gravity="bottom"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</ar.com.nicolasquartieri.widget.LoadingFrameLayout>

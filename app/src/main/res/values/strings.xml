@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">flickr-app</string>
+    <!-- App Name -->
+    <string name="app_name">Flickr App</string>
+
+    <!-- Error Handling Msj -->
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="ops">Oops! Something went wrong</string>
+    <string name="please_try_again">Please try again later</string>
+    <string name="error_api_version">This version of the app is not supported anymore, please update.</string>
+    <string name="error_repeated_mail">We\'re sorry, this email is already registered.</string>
+    <string name="generic_error">There was a problem. Try again</string>
+    <string name="no_connection">You are not connected to the Internet. Try again later.</string>
+    <string name="try_again">Please try again</string>
+    <string name="sorry">We\'re sorry!</string>
+
+    <!-- Stuff -->
+    <string name="heart">Heart</string>
+    <string name="action">There is no Photos\'s or something went wrong.</string>
+    <string name="title">Flickr Photo List</string>
+    <string name="title_detail">Photo Detail</string>
+    <string name="search">Search</string>
+    <string name="settings">settings</string>
+    <string name="no_description">No Description</string>
 </resources>
