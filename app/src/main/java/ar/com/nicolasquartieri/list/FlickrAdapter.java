@@ -16,14 +16,19 @@ import ar.com.nicolasquartieri.model.Photo;
 import ar.com.nicolasquartieri.widget.LoadingImageView;
 
 /**
+ * Handle the flow and the creation of each {@link Photo} in the list.
  * @author Nicolas Quartieri (nicolas.quartieri@gmailn.com)
  */
 class FlickrAdapter extends RecyclerView.Adapter<FlickrAdapter.PhotoHolder> {
-
+	/** The Fragment */
 	private final Fragment fragment;
-
+	/** List of {@link Photo} */
 	private List<Photo> photos;
 
+	/**
+	 * Constructor.
+	 * @param fragment The fragment.
+     */
 	FlickrAdapter(final Fragment fragment) {
 		this.fragment = fragment;
 	}

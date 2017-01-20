@@ -36,10 +36,16 @@ public class FlickrDetailFragment extends BaseFragment
     private LoadingImageView mFlickrImageView;
     private LoadingImageView mAvatarImageView;
     private TextView mDescriptionTextView;
+    private View mNoDescription;
 
     private Photo mPhoto;
     private PhotoInfo mPhotoInfo;
 
+    /**
+     * New {@link FlickrDetailFragment} instance.
+     *
+     * @return The fragment.
+     */
     public static Fragment newInstance(Photo photo) {
         Bundle args = new Bundle();
         args.putParcelable(ARG_PHOTO, photo);
@@ -60,6 +66,7 @@ public class FlickrDetailFragment extends BaseFragment
 
         mPhoto = getArguments().getParcelable(ARG_PHOTO);
 
+        mNoDescription = view.findViewById(R.id.no_description);
         mRealNameTextView = (TextView) view.findViewById(R.id.realname_txt);
         mTitleTextView = (TextView) view.findViewById(R.id.title_txt);
         mFlickrImageView = (LoadingImageView) view.findViewById(R.id.flickr_img);
@@ -118,7 +125,13 @@ public class FlickrDetailFragment extends BaseFragment
             mRealNameTextView.setText(mPhotoInfo.getOwner().getRealname());
             mTitleTextView.setText(mPhotoInfo.getTitle().getContent());
             mAvatarImageView.setImageUrl(mPhotoInfo.getAvatarImageURL(), true);
-            mDescriptionTextView.setText(mPhotoInfo.getDescription().getContent());
+            String content = mPhotoInfo.getDescription().getContent();
+            if (!content.isEmpty()) {
+                mDescriptionTextView.setText(mPhotoInfo.getDescription().getContent());
+            } else {
+                mNoDescription.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 

@@ -47,8 +47,6 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onPostCreate(@Nullable Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		setActionBarTitle(getCurrentTitle());
-		// TODO
-		// setActionBarIcon(R.mipmap.ic_launcher);
 	}
 
 	@Override
