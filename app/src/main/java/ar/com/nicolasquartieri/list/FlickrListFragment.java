@@ -29,7 +29,7 @@ import ar.com.nicolasquartieri.local.AppDatabase;
 import ar.com.nicolasquartieri.local.PhotoTable;
 import ar.com.nicolasquartieri.model.Photo;
 import ar.com.nicolasquartieri.remote.ApiIntentService;
-import ar.com.nicolasquartieri.remote.FlickrLastestPhotoApiService;
+import ar.com.nicolasquartieri.remote.FlickrLatestPhotoApiService;
 import ar.com.nicolasquartieri.remote.FlickrSearchApiService;
 import ar.com.nicolasquartieri.ui.BaseFragment;
 import ar.com.nicolasquartieri.ui.utils.AnimationUtils;
@@ -134,7 +134,7 @@ public class FlickrListFragment extends BaseFragment
                 .equalsIgnoreCase(FlickrSearchApiService.ID)) {
             mCurrentService = FlickrSearchApiService.newIntent(getActivity(), mQuery, mCurrentPage);
         } else {
-            mCurrentService = FlickrLastestPhotoApiService.newIntent(getActivity(), mCurrentPage);
+            mCurrentService = FlickrLatestPhotoApiService.newIntent(getActivity(), mCurrentPage);
         }
         getActivity().startService(mCurrentService);
     }
@@ -143,7 +143,7 @@ public class FlickrListFragment extends BaseFragment
     protected void onStartLoading() {
         super.onStartLoading();
         // Sync cause data from remote service.
-        mCurrentService = FlickrLastestPhotoApiService.newIntent(getActivity());
+        mCurrentService = FlickrLatestPhotoApiService.newIntent(getActivity());
         getActivity().startService(mCurrentService);
     }
 

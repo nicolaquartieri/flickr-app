@@ -26,16 +26,16 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Service in charge of retrieving the lastest photos uploaded to Flicker. The intent
+ * Service in charge of retrieving the latest photos uploaded to Flicker. The intent
  * required for this service must be created with
- * {@link FlickrLastestPhotoApiService#newIntent(Context)} and later on can be invoked
+ * {@link FlickrLatestPhotoApiService#newIntent(Context)} and later on can be invoked
  * with {@link Context#startService(Intent)}. When the service finishes its work the
- * action {@link FlickrLastestPhotoApiService#RESPONSE_ACTION} is broadcast for all
+ * action {@link FlickrLatestPhotoApiService#RESPONSE_ACTION} is broadcast for all
  * receivers to be notified.
  * @author Nicolas Quartieri (nicolas.quartieri@gmailn.com)
  */
-public class FlickrLastestPhotoApiService extends ApiService {
-    private final String TAG = FlickrLastestPhotoApiService.class.getSimpleName();
+public class FlickrLatestPhotoApiService extends ApiService {
+    private final String TAG = FlickrLatestPhotoApiService.class.getSimpleName();
 
     /** Api service id. */
     public static final String ID = "LATEST_PHOTO_API";
@@ -47,7 +47,7 @@ public class FlickrLastestPhotoApiService extends ApiService {
     public static final String PAGE= "PAGE";
 
     /** Default constructor. */
-    FlickrLastestPhotoApiService() {
+    FlickrLatestPhotoApiService() {
     }
 
     /**
@@ -73,7 +73,7 @@ public class FlickrLastestPhotoApiService extends ApiService {
         Intent intent = new Intent(context, ApiIntentService.class);
         Bundle extras = new Bundle();
         extras.putString(ApiIntentService.EXTRA_API_SERVICE_ID,
-                FlickrLastestPhotoApiService.ID);
+                FlickrLatestPhotoApiService.ID);
         extras.putInt(PAGE, page);
         intent.putExtras(extras);
         return intent;

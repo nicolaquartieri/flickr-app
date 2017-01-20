@@ -32,7 +32,7 @@ public class ApiIntentService extends IntentService {
         mApiServices = new HashMap<String, ApiService>();
         mApiServices.put(FlickrSearchApiService.ID, new FlickrSearchApiService());
         mApiServices.put(FlickrPhotoInfoApiService.ID, new FlickrPhotoInfoApiService());
-        mApiServices.put(FlickrLastestPhotoApiService.ID, new FlickrLastestPhotoApiService());
+        mApiServices.put(FlickrLatestPhotoApiService.ID, new FlickrLatestPhotoApiService());
     }
 
     @Override
