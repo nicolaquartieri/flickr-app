@@ -32,6 +32,7 @@ import ar.com.nicolasquartieri.remote.ApiIntentService;
 import ar.com.nicolasquartieri.remote.FlickrLastestPhotoApiService;
 import ar.com.nicolasquartieri.remote.FlickrSearchApiService;
 import ar.com.nicolasquartieri.ui.BaseFragment;
+import ar.com.nicolasquartieri.ui.utils.AnimationUtils;
 import ar.com.nicolasquartieri.ui.utils.KeyboardUtils;
 import ar.com.nicolasquartieri.widget.recyclerview.ItemOffsetDecoration;
 
@@ -63,6 +64,8 @@ public class FlickrListFragment extends BaseFragment
     private EndlessRecyclerViewScrollListener mGridEndlessRecyclerViewScrollListener;
     /** Linear Endless Recycler View Scroll Listener */
     private EndlessRecyclerViewScrollListener mLinearEndlessRecyclerViewScrollListener;
+    /** Loading Fetch Bar  */
+    private View mFetchBar;
 
     /**
      * New {@link FlickrListFragment} instance.
@@ -90,6 +93,7 @@ public class FlickrListFragment extends BaseFragment
         super.onViewCreated(view, savedInstanceState);
 
         mNothingLayout = (LinearLayout) view.findViewById(R.id.nothing_layout);
+        mFetchBar = view.findViewById(R.id.fetch_bar);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.photo_list);
         // Grid Layout Manager.
         mGridlayoutManager = new GridLayoutManager(getActivity(), COLUMNS,
@@ -124,6 +128,7 @@ public class FlickrListFragment extends BaseFragment
      * @param page The requested page to deliver.
      */
     private void onLoadMoreElements(int page) {
+        AnimationUtils.fadeInView(mFetchBar);
         int mCurrentPage = page + 1;
         if (mCurrentService.getStringExtra(ApiIntentService.EXTRA_API_SERVICE_ID)
                 .equalsIgnoreCase(FlickrSearchApiService.ID)) {
@@ -167,7 +172,7 @@ public class FlickrListFragment extends BaseFragment
                 mQuery = query;
                 mCurrentService = FlickrSearchApiService.newIntent(getActivity(), mQuery);
                 getActivity().startService(mCurrentService);
-                // Hide softkeyboard.
+                // Hide softKeyboard.
                 KeyboardUtils.hideSoftKeyboard(getActivity(), searchView);
                 return true;
             }
@@ -186,9 +191,8 @@ public class FlickrListFragment extends BaseFragment
             case R.id.settings_item:
                 // Switch between Grid & Linear Layout.
                 RecyclerView.LayoutManager layoutManager;
-                // FIXME: User setTag & getTag instead getDrawable.
-                if (item.getIcon().getConstantState().equals(getResources()
-                        .getDrawable(R.mipmap.ic_view_module).getConstantState())) {
+                mRecyclerView.setAdapter(null);
+                if (mRecyclerView.getLayoutManager() == mLinearLayoutManager) {
                     // Grid Screen.
                     item.setIcon(R.mipmap.ic_view_list);
                     layoutManager = mGridlayoutManager;
@@ -198,11 +202,17 @@ public class FlickrListFragment extends BaseFragment
                     layoutManager = mLinearLayoutManager;
                 }
                 mRecyclerView.setLayoutManager(layoutManager);
-//                layoutManager.scrollToPosition(0);
+                mRecyclerView.setAdapter(mAdapter);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onLoadingFinished(Intent intent) {
+        super.onLoadingFinished(intent);
+        AnimationUtils.fadeOutView(mFetchBar);
     }
 
     @Override

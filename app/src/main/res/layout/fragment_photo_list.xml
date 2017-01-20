@@ -22,4 +22,19 @@
         android:clipToPadding="false"
         android:divider="@null"
         android:visibility="visible"/>
+
+    <RelativeLayout
+        android:id="@+id/fetch_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        android:layout_gravity="bottom"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 </ar.com.nicolasquartieri.widget.LoadingFrameLayout>
