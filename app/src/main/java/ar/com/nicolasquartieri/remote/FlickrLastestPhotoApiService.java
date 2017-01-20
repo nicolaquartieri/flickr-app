@@ -26,10 +26,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Service in charge of retrieving the current user. The intent required for this service
- * must be created with {@link FlickrLastestPhotoApiService#newIntent(Context)} and later on can
- * be invoked with {@link Context#startService(Intent)}. When the service finishes its
- * work the action {@link FlickrLastestPhotoApiService#RESPONSE_ACTION} is broadcast for all
+ * Service in charge of retrieving the lastest photos uploaded to Flicker. The intent
+ * required for this service must be created with
+ * {@link FlickrLastestPhotoApiService#newIntent(Context)} and later on can be invoked
+ * with {@link Context#startService(Intent)}. When the service finishes its work the
+ * action {@link FlickrLastestPhotoApiService#RESPONSE_ACTION} is broadcast for all
  * receivers to be notified.
  * @author Nicolas Quartieri (nicolas.quartieri@gmailn.com)
  */
@@ -42,6 +43,7 @@ public class FlickrLastestPhotoApiService extends ApiService {
     /** Api service broadcast action. */
     public static final String RESPONSE_ACTION = "SEARCH_API_RESPONSE";
 
+    /** Requested page */
     public static final String PAGE= "PAGE";
 
     /** Default constructor. */
@@ -133,6 +135,12 @@ public class FlickrLastestPhotoApiService extends ApiService {
         operations.add(operation);
     }
 
+    /**
+     * Get the body of the {@link Response}.
+     * @param response The response, can't be null.
+     * @return The body.
+     * @throws IOException
+     */
     private String getPhotoBody(Response response) throws IOException {
         String body;
         if (response.body() == null) {
@@ -147,6 +155,13 @@ public class FlickrLastestPhotoApiService extends ApiService {
         return body;
     }
 
+    /**
+     * Parse and retrieve the object inside the Json String based on the desire name of
+     * the member.
+     * @param in The Json String to be parse.
+     * @param member The member of the Json String to be find.
+     * @return The parsed object.
+     */
     private Photos parseObject(String in, String member) {
         final Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(in, JsonObject.class);
@@ -159,10 +174,10 @@ public class FlickrLastestPhotoApiService extends ApiService {
     }
 
     /**
+     * Builder for Search Request Service.
      */
     class FlickrSearchRequestBuilder
             implements RequestBuilder<FlickrSearchRequestBuilder.FlickrSearchRequest> {
-
         private final FlickrSearchRequest request;
 
         public FlickrSearchRequestBuilder() {

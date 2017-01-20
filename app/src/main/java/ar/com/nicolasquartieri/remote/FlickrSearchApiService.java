@@ -26,16 +26,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Service in charge of retrieving the current user. The intent required for this service
- * must be created with {@link FlickrSearchApiService#newIntent(Context, String)} and later on can
- * be invoked with {@link Context#startService(Intent)}. When the service finishes its
- * work the action {@link FlickrSearchApiService#RESPONSE_ACTION} is broadcast for all
- * receivers to be notified.
+ * Service in charge of retrieving the list of {@link Photo} base on the query text
+ * passed. The intent required for this service must be created with
+ * {@link FlickrSearchApiService#newIntent(Context, String)} and later on can be invoked
+ * with {@link Context#startService(Intent)}. When the service finishes its work the
+ * action {@link FlickrSearchApiService#RESPONSE_ACTION} is broadcast for all receivers to
+ * be notified.
  * @author Nicolas Quartieri (nicolas.quartieri@gmailn.com)
  */
 public class FlickrSearchApiService extends ApiService {
     private final String TAG = FlickrSearchApiService.class.getSimpleName();
 
+    /** Empty String */
     private static final String EMPTY_STRING = "";
 
     /** Api service id. */
@@ -44,7 +46,9 @@ public class FlickrSearchApiService extends ApiService {
     /** Api service broadcast action. */
     public static final String RESPONSE_ACTION = "SEARCH_API_RESPONSE";
 
+    /** Query String */
     public static final String QUERY_STRING = "QUERY_STRING";
+    /** Requested page */
     public static final String PAGE= "PAGE";
 
     /** Default constructor. */
@@ -95,7 +99,6 @@ public class FlickrSearchApiService extends ApiService {
         // Get Arguments.
         String text = args.getString(QUERY_STRING, EMPTY_STRING);
         int page = args.getInt(PAGE, 1);
-        //TODO check this.
         // Create URL
         FlickrSearchRequestBuilder.FlickrSearchRequest flickrSearchRequest = builder
                 .query(text)
@@ -142,6 +145,12 @@ public class FlickrSearchApiService extends ApiService {
         operations.add(operation);
     }
 
+    /**
+     * Get the body of the {@link Response}.
+     * @param response The response, can't be null.
+     * @return The body.
+     * @throws IOException
+     */
     private String getPhotoBody(Response response) throws IOException {
         String body;
         if (response.body() == null) {
@@ -156,6 +165,13 @@ public class FlickrSearchApiService extends ApiService {
         return body;
     }
 
+    /**
+	 * Parse and retrieve the object inside the Json String based on the desire name of
+	 * the member.
+	 * @param in The Json String to be parse.
+	 * @param member The member of the Json String to be find.
+	 * @return The parsed object.
+	 */
     private Photos parseObject(String in, String member) {
         final Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(in, JsonObject.class);
@@ -168,10 +184,10 @@ public class FlickrSearchApiService extends ApiService {
     }
 
     /**
+     * Builder for Search Request Service.
      */
     class FlickrSearchRequestBuilder
             implements RequestBuilder<FlickrSearchRequestBuilder.FlickrSearchRequest> {
-
         private final FlickrSearchRequest request;
 
         public FlickrSearchRequestBuilder() {
