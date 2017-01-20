@@ -214,7 +214,7 @@ public class FlickrSearchApiService extends ApiService {
             public String getUrl() {
                 uriBuilder = Uri.parse(EnvironmentUtils.getBaseUrl()).buildUpon();
                 uriBuilder.appendQueryParameter("method", "flickr.photos.search");
-                uriBuilder.appendQueryParameter("api_key", "67694921845e1e630e1be511d82a6f53");
+                uriBuilder.appendQueryParameter("api_key", EnvironmentUtils.getApiKey());
                 uriBuilder.appendQueryParameter("text", tokenMap.get(SEARCH_QUERY_PARAM));
                 uriBuilder.appendQueryParameter("page", tokenMap.get(PAGE_QUERY_PARAM));
                 uriBuilder.appendQueryParameter("per_page", "30");

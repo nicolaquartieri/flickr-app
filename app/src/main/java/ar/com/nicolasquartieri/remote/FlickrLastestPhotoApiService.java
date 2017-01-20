@@ -88,7 +88,6 @@ public class FlickrLastestPhotoApiService extends ApiService {
 
         // Get Arguments.
         int page = args.getInt(PAGE, 1);
-        //TODO check this.
         // Create URL
         FlickrSearchRequestBuilder.FlickrSearchRequest flickrSearchRequest = builder
                 .page(page)
@@ -196,7 +195,7 @@ public class FlickrLastestPhotoApiService extends ApiService {
             public String getUrl() {
                 uriBuilder = Uri.parse(EnvironmentUtils.getBaseUrl()).buildUpon();
                 uriBuilder.appendQueryParameter("method", "flickr.photos.getRecent");
-                uriBuilder.appendQueryParameter("api_key", "67694921845e1e630e1be511d82a6f53");
+                uriBuilder.appendQueryParameter("api_key", EnvironmentUtils.getApiKey());
                 uriBuilder.appendQueryParameter("page", tokenMap.get(PAGE_QUERY_PARAM));
                 uriBuilder.appendQueryParameter("per_page", "30");
                 uriBuilder.appendQueryParameter("format", "json");

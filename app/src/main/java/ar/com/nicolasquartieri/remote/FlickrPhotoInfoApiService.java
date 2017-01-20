@@ -199,7 +199,7 @@ public class FlickrPhotoInfoApiService extends ApiService {
             public String getUrl() {
                 uriBuilder = Uri.parse(EnvironmentUtils.getBaseUrl()).buildUpon();
                 uriBuilder.appendQueryParameter("method", "flickr.photos.getInfo");
-                uriBuilder.appendQueryParameter("api_key", "67694921845e1e630e1be511d82a6f53");
+                uriBuilder.appendQueryParameter("api_key", EnvironmentUtils.getApiKey());
                 uriBuilder.appendQueryParameter("photo_id", tokenMap.get(SEARCH_PHOTO_ID_PARAM));
                 uriBuilder.appendQueryParameter("secret", tokenMap.get(SEARCH_SECRET_PARAM));
                 uriBuilder.appendQueryParameter("format", "json");
