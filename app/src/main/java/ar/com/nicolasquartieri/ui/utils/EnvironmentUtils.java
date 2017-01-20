@@ -15,6 +15,8 @@ public class EnvironmentUtils {
     public static final String STAGING = "staging";
     /** Production environment. */
     public static final String PRODUCTION = "production";
+    /** Flickr API KEY */
+    private static final String API_KEY = "67694921845e1e630e1be511d82a6f53";
 
     /**
      * Returns the base url according current build environment.
@@ -37,5 +39,10 @@ public class EnvironmentUtils {
 
     /** This class cannot be instantiated. */
     private EnvironmentUtils() {
+    }
+
+    /** Get the Flickr API KEY */
+    public static String getApiKey() {
+        return API_KEY;
     }
 }
