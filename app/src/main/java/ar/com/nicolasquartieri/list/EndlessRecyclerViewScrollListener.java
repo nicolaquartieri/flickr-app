@@ -28,6 +28,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
     public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
+        //FIXME: Find the amount of elements to non-block the scroll.
         this.visibleThreshold = 10;
     }
 
