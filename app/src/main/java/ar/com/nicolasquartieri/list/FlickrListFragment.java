@@ -12,6 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,6 +67,8 @@ public class FlickrListFragment extends BaseFragment
     private EndlessRecyclerViewScrollListener mLinearEndlessRecyclerViewScrollListener;
     /** Loading Fetch Bar  */
     private View mFetchBar;
+    /** Swipe To Refresh */
+    private SwipeRefreshLayout mSwipeToRefreshLayout;
 
     /**
      * New {@link FlickrListFragment} instance.
@@ -94,6 +97,15 @@ public class FlickrListFragment extends BaseFragment
 
         mNothingLayout = (LinearLayout) view.findViewById(R.id.nothing_layout);
         mFetchBar = view.findViewById(R.id.fetch_bar);
+        // Swipe to Refresh layout.
+        mSwipeToRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        mSwipeToRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getActivity().startService(mCurrentService);
+                mAdapter.setPhotos(null);
+            }
+        });
         mRecyclerView = (RecyclerView) view.findViewById(R.id.photo_list);
         // Grid Layout Manager.
         mGridlayoutManager = new GridLayoutManager(getActivity(), COLUMNS,
@@ -212,6 +224,7 @@ public class FlickrListFragment extends BaseFragment
     @Override
     public void onLoadingFinished(Intent intent) {
         super.onLoadingFinished(intent);
+        mSwipeToRefreshLayout.setRefreshing(false);
         AnimationUtils.fadeOutView(mFetchBar);
     }
 

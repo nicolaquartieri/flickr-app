@@ -15,13 +15,19 @@
         <include layout="@layout/fragment_nothing_here"/>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/photo_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:divider="@null"
-        android:visibility="visible"/>
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/photo_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:visibility="visible"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/fetch_bar"

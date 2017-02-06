@@ -41,8 +41,8 @@ import ar.com.nicolasquartieri.ui.utils.GsonHelper;
 public abstract class ApiService {
     /** Log tag. */
     private static final String TAG = ApiService.class.getSimpleName();
-    /** Cache TTL is 30 seconds. */
-    private static final long CACHE_TTL = 30 * 1000;
+    /** Cache TTL is 1 seconds. */
+    private static final long CACHE_TTL = 1 * 1000;
     /** Http method GET. */
     private static final String METHOD_GET = "GET";
     /** Flag to force request avoiding cache, it should contain a Boolean. */
