@@ -9,3 +9,5 @@ Simple App for search photos based on user preference.
   - Show latest uploaded photos to Flickr when the app start.
   - Search based on user preference.
   - Show detail description of each of the selected Photos.
+  - Swipe to refresh the user search or the latest uploaded photos to Flickr when the app start.
+  - Espresso UI test added.
