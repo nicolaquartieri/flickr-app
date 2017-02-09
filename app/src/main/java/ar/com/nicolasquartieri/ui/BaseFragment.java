@@ -54,8 +54,6 @@ public class BaseFragment extends Fragment {
 
     /** Flag which indicates that a user logged response is pending. */
     private boolean mPendingUserLogged = false;
-    /** Receiver to handle user login. */
-    private BroadcastReceiver mUserLoggedReceiver;
 
     /** Loading view. */
     private View mLoadingView;
@@ -115,30 +113,6 @@ public class BaseFragment extends Fragment {
         onInitializeLoader(getLoaderManager());
         if (!TextUtils.isEmpty(action)) {
             registerLoadingResponseAction(action);
-        }
-        if (mUserLoggedReceiver == null) {
-            mUserLoggedReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    // Check if there is not an error.
-                    if (intent.getExtras() != null) {
-                        ApiErrorResponse apiErrorResponse = intent.getParcelableExtra(
-                                ApiService.EXTRA_RESPONSE_ERROR);
-                        if (apiErrorResponse != null) {
-                            // If there was an error just ignore the response, we are only want to
-                            // know if user has been changed.
-                            return;
-                        }
-                    }
-                    // Check if fragment is resumed.
-                    if (!isResumed()) {
-                        mPendingUserLogged = true;
-                        return;
-                    }
-                    // Execute callback.
-                    onUserLogged();
-                }
-            };
         }
         if (mLoadingState == LOADING_STATE_IDLE) {
             onStartLoading();
@@ -203,10 +177,6 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        if (mUserLoggedReceiver != null) {
-            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(
-                    mUserLoggedReceiver);
-        }
         if (mLoadingResponseReceiver != null) {
             LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(
                     mLoadingResponseReceiver);
