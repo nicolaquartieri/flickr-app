@@ -49,7 +49,7 @@ public class AndroidUITest {
         textToCompare = "paris";
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         Context ctx = instrumentation.getTargetContext();
-        // Idle Resource Register.
+        // Idle Resource Register. (Not use for now)
 //        searchServiceIdlingResource = new SearchServiceIdlingResource(ctx);
 //        Espresso.registerIdlingResources(searchServiceIdlingResource);
     }

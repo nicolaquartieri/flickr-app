@@ -49,6 +49,7 @@ dependencies {
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     // JUnit.
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.+'
     // Espresso.
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.supportLibVersion;
     androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion;
