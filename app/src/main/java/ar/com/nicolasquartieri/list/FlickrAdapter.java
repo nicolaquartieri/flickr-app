@@ -1,5 +1,6 @@
 package ar.com.nicolasquartieri.list;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -65,13 +66,17 @@ class FlickrAdapter extends RecyclerView.Adapter<FlickrAdapter.PhotoHolder> {
 	}
 
 	public void addPhotos(List<Photo> photos) {
+		if (this.photos == null) {
+			this.photos = new ArrayList<>();
+		}
+
 		int currentSize = this.photos.size();
 		if (photos != null) {
 			this.photos.addAll(photos);
 		} else {
 			this.photos.clear();
 		}
-		notifyItemRangeInserted(currentSize, this.photos.size() - 1);
+		notifyItemRangeInserted(currentSize, currentSize - 1);
 	}
 
 	class PhotoHolder extends RecyclerView.ViewHolder
