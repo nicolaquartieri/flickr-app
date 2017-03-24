@@ -57,6 +57,10 @@ class FlickrAdapter extends RecyclerView.Adapter<FlickrAdapter.PhotoHolder> {
 	}
 
 	public void setPhotos(List<Photo> photos) {
+		if (this.photos == null) {
+			this.photos = new ArrayList<>();
+		}
+
 		if (photos != null) {
 			this.photos = photos;
 		} else {
