@@ -80,7 +80,8 @@ class FlickrAdapter extends RecyclerView.Adapter<FlickrAdapter.PhotoHolder> {
 		} else {
 			this.photos.clear();
 		}
-		notifyItemRangeInserted(currentSize, currentSize - 1);
+
+		notifyDataSetChanged();
 	}
 
 	class PhotoHolder extends RecyclerView.ViewHolder

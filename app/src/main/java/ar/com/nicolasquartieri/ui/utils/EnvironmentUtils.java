@@ -25,13 +25,13 @@ public class EnvironmentUtils {
     public static String getBaseUrl() {
         switch (BuildConfig.FLAVOR) {
             case EnvironmentUtils.PRODUCTION:
-                return "https://api.flickr.com/services/rest/";
+                return "https://api.flickr.com/";
             case EnvironmentUtils.STAGING:
-                return "https://api.flickr.com/services/rest/";
+                return "https://api.flickr.com/";
             case EnvironmentUtils.QA:
-                return "https://api.flickr.com/services/rest/";
+                return "https://api.flickr.com/";
             case EnvironmentUtils.DEV:
-                return "https://api.flickr.com/services/rest/";
+                return "https://api.flickr.com/";
             default:
                 throw new AssertionError("Invalid environment: " + BuildConfig.FLAVOR);
         }
