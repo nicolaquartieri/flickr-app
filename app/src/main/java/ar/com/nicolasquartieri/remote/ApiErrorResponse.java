@@ -25,6 +25,9 @@ public class ApiErrorResponse implements Parcelable {
     @SerializedName("code")
     private int mCode = INVALID_ERROR_CODE;
 
+    /** Response error. */
+    public static final String EXTRA_RESPONSE_ERROR = "EXTRA_RESPONSE_ERROR";
+
     /** Error type. */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ERROR_NO_ERROR, ERROR_CONNECTION, ERROR_APPLICATION, ERROR_SERVICE, ERROR_RELOGIN})

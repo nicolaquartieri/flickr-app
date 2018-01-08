@@ -1,16 +1,14 @@
 package ar.com.nicolasquartieri.list;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.SearchManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,11 +25,9 @@ import android.widget.LinearLayout;
 
 import ar.com.nicolasquartieri.R;
 import ar.com.nicolasquartieri.local.AppDatabase;
-import ar.com.nicolasquartieri.local.PhotoTable;
 import ar.com.nicolasquartieri.model.Photo;
-import ar.com.nicolasquartieri.remote.ApiIntentService;
-import ar.com.nicolasquartieri.remote.FlickrLatestPhotoApiService;
 import ar.com.nicolasquartieri.remote.FlickrSearchApiService;
+import ar.com.nicolasquartieri.remote.ResponseType;
 import ar.com.nicolasquartieri.ui.BaseFragment;
 import ar.com.nicolasquartieri.ui.utils.AnimationUtils;
 import ar.com.nicolasquartieri.ui.utils.KeyboardUtils;
@@ -42,8 +38,7 @@ import ar.com.nicolasquartieri.widget.recyclerview.ItemOffsetDecoration;
  *
  * @author Nicolas Quartieri (nicolas.quartieri@gmailn.com)
  */
-public class FlickrListFragment extends BaseFragment
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+public class FlickrListFragment extends BaseFragment {
 
     /** Recycler View */
     private RecyclerView mRecyclerView;
@@ -55,8 +50,6 @@ public class FlickrListFragment extends BaseFragment
     private static final int COLUMNS = 3;
     /** Query search */
     private String mQuery;
-    /** Current service */
-    private Intent mCurrentService;
     /** Grid Layout Manager */
     private GridLayoutManager mGridlayoutManager;
     /** Linear Layout Manager */
@@ -69,6 +62,8 @@ public class FlickrListFragment extends BaseFragment
     private View mFetchBar;
     /** Swipe To Refresh */
     private SwipeRefreshLayout mSwipeToRefreshLayout;
+    /** View Model */
+    private FlickrListViewModel flickListViewModel;
 
     /**
      * New {@link FlickrListFragment} instance.
@@ -94,7 +89,15 @@ public class FlickrListFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView(view);
+        initViewModel();
+    }
 
+    /**
+     * Initiate all related view components of this screen.
+     * @param view The actual {@link View} of this screen.
+     */
+    private void initView(View view) {
         mNothingLayout = (LinearLayout) view.findViewById(R.id.nothing_layout);
         mFetchBar = view.findViewById(R.id.fetch_bar);
         // Swipe to Refresh layout.
@@ -102,8 +105,7 @@ public class FlickrListFragment extends BaseFragment
         mSwipeToRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getActivity().startService(mCurrentService);
-                mAdapter.setPhotos(null);
+                flickListViewModel.onPullRefresh();
             }
         });
         mRecyclerView = (RecyclerView) view.findViewById(R.id.photo_list);
@@ -136,27 +138,41 @@ public class FlickrListFragment extends BaseFragment
     }
 
     /**
+     * Initiate all related view models of this screen.
+     */
+    private void initViewModel() {
+        // 1. Create ViewModel.
+        flickListViewModel = ViewModelProviders.of(this).get(FlickrListViewModel.class);
+        // 2. Creates the observer.
+        Observer<ResponseType<List<Photo>>> observer = new Observer<ResponseType<List<Photo>>>() {
+            @Override
+            public void onChanged(@Nullable ResponseType<List<Photo>> response) {
+                List<Photo> photos = response.getPlayload();
+                if (photos != null && !photos.isEmpty()) {
+                    mNothingLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    mNothingLayout.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                }
+                mAdapter.addPhotos(photos);
+                onLoadingResponse(new Intent().putExtras(response.getArgs()));
+                finishLoading();
+            }
+        };
+        // 2. Subscribe the observer.
+        flickListViewModel.getCurrentListPhoto().observe(this, observer);
+    }
+
+    // TODO
+    /**
      * Get more {@link Photo} through the respective service.
      * @param page The requested page to deliver.
      */
     private void onLoadMoreElements(int page) {
         AnimationUtils.fadeInView(mFetchBar);
         int mCurrentPage = page + 1;
-        if (mCurrentService.getStringExtra(ApiIntentService.EXTRA_API_SERVICE_ID)
-                .equalsIgnoreCase(FlickrSearchApiService.ID)) {
-            mCurrentService = FlickrSearchApiService.newIntent(getActivity(), mQuery, mCurrentPage);
-        } else {
-            mCurrentService = FlickrLatestPhotoApiService.newIntent(getActivity(), mCurrentPage);
-        }
-        getActivity().startService(mCurrentService);
-    }
-
-    @Override
-    protected void onStartLoading() {
-        super.onStartLoading();
-        // Sync cause data from remote service.
-        mCurrentService = FlickrLatestPhotoApiService.newIntent(getActivity());
-        getActivity().startService(mCurrentService);
+        flickListViewModel.onLoadMoreElements(mQuery, mCurrentPage);
     }
 
     @Override
@@ -182,8 +198,9 @@ public class FlickrListFragment extends BaseFragment
                 mLinearEndlessRecyclerViewScrollListener.resetState();
                 // Call new Search.
                 mQuery = query;
-                mCurrentService = FlickrSearchApiService.newIntent(getActivity(), mQuery);
-                getActivity().startService(mCurrentService);
+                // TODO
+//                mCurrentService = FlickrSearchApiService.newIntent(getActivity(), mQuery);
+//                getActivity().startService(mCurrentService);
                 // Hide softKeyboard.
                 KeyboardUtils.hideSoftKeyboard(getActivity(), searchView);
                 return true;
@@ -229,47 +246,11 @@ public class FlickrListFragment extends BaseFragment
     }
 
     @Override
-    protected void onInitializeLoader(LoaderManager manager) {
-        super.onInitializeLoader(manager);
-        initLoader(manager, R.id.loader_photos_list, null, this);
-    }
-
-    @Override
-    protected String onCreateLoadingResponseAction() {
-        return FlickrSearchApiService.RESPONSE_ACTION;
-    }
-
-    @Override
     protected void onCreateAdapter(Context context) {
         super.onCreateAdapter(context);
         if (mAdapter == null) {
             mAdapter = new FlickrAdapter(this);
         }
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        List<Photo> photos = PhotoTable.parseAllCursor(cursor);
-        if (photos != null && !photos.isEmpty()) {
-            mAdapter.addPhotos(photos);
-            mNothingLayout.setVisibility(View.GONE);
-            mRecyclerView.setVisibility(View.VISIBLE);
-        } else {
-            mNothingLayout.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-            mAdapter.setPhotos(photos);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.setPhotos(new ArrayList<Photo>());
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), PhotoTable.buildUri(), null, null, null,
-                PhotoTable.COLUMN_ID + " desc");
     }
 }
